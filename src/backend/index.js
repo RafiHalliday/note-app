@@ -4,6 +4,7 @@ const config = require("./config.json");
 const mongoose = require("mongoose");
 
 const User = require("./models/user.model");
+const Note = require("./models/note.model");
 
 const express = require("express");
 const cors = require("cors");
@@ -14,6 +15,9 @@ const { authenticateToken } = require("./utilities");
 
 mongoose.connect(config.connectionString);
 
+// app.use(express.urlencoded({ extended: true })); // For form data
+// app.use(express.json()); // For JSON bodies
+
 app.use(express.json());
 
 app.use(
@@ -22,8 +26,6 @@ app.use(
     })
 );
 
-// app.use(express.urlencoded({ extended: true })); // For form data
-// app.use(express.json()); // For JSON bodies
 
 app.get("/", (req, res) => {
     res.json({ data: "hello" });
@@ -81,6 +83,7 @@ app.post("/create-account", async (req, res) => {
     })
 });
 
+// Login
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
     if (!email) {
@@ -121,6 +124,48 @@ app.post("/login", async (req, res) => {
             .json({
                 error: true,
                 message: "Invalid credentials!",
+            });
+    }
+});
+
+// Add new note
+app.post("/add-note", authenticateToken, async (req, res) => {
+    const { title, content, tags } = req.body;
+    const { user } = req.user;
+
+    if (!title) {
+        return res
+            .status(400)
+            .json({ error: true, message: "Title is required!" });
+    }
+
+    if (!content) {
+        return res
+            .status(400)
+            .json({ error: true, message: "Content is required!" });
+    }
+
+    try {
+        const note = new Note({
+            title,
+            content,
+            tags: tags || [],
+            userId: user._id,
+        });
+
+        await note.save();
+
+        return res.json({
+            error: false,
+            note,
+            message: "Note added succesfully",
+        });
+    } catch (error) {
+        return res
+            .status(500)
+            .json({
+                error: true,
+                message: "Internal server error",
             });
     }
 });
