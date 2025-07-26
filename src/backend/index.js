@@ -243,7 +243,7 @@ app.get("/get-all-notes/", authenticateToken, async (req, res) => {
     }
 })
 
-// Delete notes
+// Delete note
 app.delete("/delete-note/:noteId", authenticateToken, async (req, res) => {
     const { noteId } = req.params;
     const { user } = req.user;
@@ -265,6 +265,43 @@ app.delete("/delete-note/:noteId", authenticateToken, async (req, res) => {
         return res.json({
             error: false,
             message: "Note deleted succesfully",
+        });
+    } catch (error) {
+        return res
+            .status(500)
+            .json({
+                error: true,
+                message: "Internal server error",
+            });
+    }
+})
+
+// Pin note
+app.put("/update-note-pinned/:noteId", authenticateToken, async (req, res) => {
+    const { noteId } = req.params;
+    const { isPinned } = req.body;
+    const { user } = req.user;
+
+    try {
+        const note = await Note.findOne({ _id: noteId, userId: user._id });
+
+        if (!note) {
+            return res
+                .status(404)
+                .json({
+                    error: true,
+                    message: "Note not found!",
+                });
+        }
+
+        note.isPinned = isPinned;
+
+        await note.save();
+
+        return res.json({
+            error: false,
+            note,
+            message: "Note updated succesfully",
         });
     } catch (error) {
         return res
