@@ -128,6 +128,27 @@ app.post("/login", async (req, res) => {
     }
 });
 
+// Get user
+app.get("/get-user", authenticateToken, async (req, res) => {
+    const { user } = req.user;
+
+    const isUser = await User.findOne({ _id: user._id });
+
+    if (!isUser) {
+        return res.status(401);
+    }
+
+    return res.json({
+        user: {
+            fullName: isUser.fullName,
+            email: isUser.email, 
+            "_id": isUser._id, 
+            createdOn: isUser.createdOn,
+        },
+        message: "",
+    });
+});
+
 // Add new note
 app.post("/add-note", authenticateToken, async (req, res) => {
     const { title, content, tags } = req.body;
@@ -220,8 +241,8 @@ app.put("/edit-note/:noteId", authenticateToken, async (req, res) => {
 app.get("/get-all-notes/", authenticateToken, async (req, res) => {
     // const { user } = req.user;
     const userId = req.user.user?._id;
-        
-    
+
+
     try {
         const notes = await Note.find({ userId }).sort({ isPinned: -1 });
         // const notes = await Note
@@ -235,11 +256,11 @@ app.get("/get-all-notes/", authenticateToken, async (req, res) => {
         });
     } catch (error) {
         return res
-        .status(500)
-        .json({
-            error: true,
-            message: "Internal server error",
-        });
+            .status(500)
+            .json({
+                error: true,
+                message: "Internal server error",
+            });
     }
 })
 
