@@ -7,11 +7,11 @@ COPY package*.json ./
 
 RUN npm install
 
-# Copy all other files
+# Copy all files except those in .dockerignore
 COPY . .
 
-# Build if needed (uncomment if you have a build step)
-# RUN npm run build
+# Copy production environment variables
+COPY .env .env
 
 EXPOSE 8000
 

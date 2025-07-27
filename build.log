@@ -1,0 +1,171 @@
+--progress is a global compose flag, better use `docker compose --progress xx build ...
+#1 [internal] load local bake definitions
+#1 reading from stdin 873B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 789B done
+#2 WARN: FromAsCasing: 'as' and 'FROM' keywords' casing do not match (line 1)
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/nginx:alpine
+#3 DONE 0.9s
+
+#4 [internal] load metadata for docker.io/library/node:18-alpine
+#4 DONE 0.9s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [builder 1/7] FROM docker.io/library/node:18-alpine@sha256:8d6421d663b4c28fd3ebc498332f249011d118945588d0a35cb9bc4b8ca09d9e
+#6 CACHED
+
+#7 [stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:d67ea0d64d518b1bb04acde3b00f722ac3e9764b3209a9b0a98924ba35e4b779
+#7 CACHED
+
+#8 [internal] load build context
+#8 transferring context: 800.31kB 0.4s done
+#8 DONE 0.4s
+
+#9 [builder 2/7] RUN apk add --no-cache python3 make g++ git
+#9 0.298 fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/APKINDEX.tar.gz
+#9 11.42 fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/community/x86_64/APKINDEX.tar.gz
+#9 12.19 (1/39) Installing libstdc++-dev (14.2.0-r4)
+#9 12.62 (2/39) Installing jansson (2.14-r4)
+#9 12.65 (3/39) Installing zstd-libs (1.5.6-r2)
+#9 12.69 (4/39) Installing binutils (2.43.1-r3)
+#9 12.94 (5/39) Installing libgomp (14.2.0-r4)
+#9 12.98 (6/39) Installing libatomic (14.2.0-r4)
+#9 13.02 (7/39) Installing gmp (6.3.0-r2)
+#9 13.08 (8/39) Installing isl26 (0.26-r1)
+#9 13.22 (9/39) Installing mpfr4 (4.2.1-r0)
+#9 13.29 (10/39) Installing mpc1 (1.3.1-r1)
+#9 13.35 (11/39) Installing gcc (14.2.0-r4)
+#9 15.95 (12/39) Installing musl-dev (1.2.5-r9)
+#9 16.16 (13/39) Installing g++ (14.2.0-r4)
+#9 16.88 (14/39) Installing brotli-libs (1.1.0-r2)
+#9 16.97 (15/39) Installing c-ares (1.34.5-r0)
+#9 17.03 (16/39) Installing libunistring (1.2-r0)
+#9 17.10 (17/39) Installing libidn2 (2.3.7-r0)
+#9 17.15 (18/39) Installing nghttp2-libs (1.64.0-r0)
+#9 17.20 (19/39) Installing libpsl (0.21.5-r3)
+#9 17.24 (20/39) Installing libcurl (8.12.1-r1)
+#9 17.30 (21/39) Installing libexpat (2.7.0-r0)
+#9 17.35 (22/39) Installing pcre2 (10.43-r0)
+#9 17.41 (23/39) Installing git (2.47.3-r0)
+#9 17.60 (24/39) Installing git-init-template (2.47.3-r0)
+#9 17.65 (25/39) Installing make (4.4.1-r2)
+#9 17.71 (26/39) Installing libbz2 (1.0.8-r6)
+#9 17.75 (27/39) Installing libffi (3.4.7-r0)
+#9 17.79 (28/39) Installing gdbm (1.24-r0)
+#9 17.84 (29/39) Installing xz-libs (5.6.3-r1)
+#9 17.90 (30/39) Installing mpdecimal (4.0.0-r0)
+#9 17.96 (31/39) Installing ncurses-terminfo-base (6.5_p20241006-r3)
+#9 18.03 (32/39) Installing libncursesw (6.5_p20241006-r3)
+#9 18.35 (33/39) Installing libpanelw (6.5_p20241006-r3)
+#9 18.40 (34/39) Installing readline (8.2.13-r0)
+#9 18.45 (35/39) Installing sqlite-libs (3.48.0-r2)
+#9 18.54 (36/39) Installing python3 (3.12.11-r0)
+#9 18.94 (37/39) Installing python3-pycache-pyc0 (3.12.11-r0)
+#9 19.18 (38/39) Installing pyc (3.12.11-r0)
+#9 19.18 (39/39) Installing python3-pyc (3.12.11-r0)
+#9 19.18 Executing busybox-1.37.0-r12.trigger
+#9 19.18 OK: 280 MiB in 56 packages
+#9 DONE 19.4s
+
+#10 [builder 3/7] WORKDIR /app
+#10 DONE 0.0s
+
+#11 [builder 4/7] COPY package*.json ./
+#11 DONE 0.1s
+
+#12 [builder 5/7] RUN npm install --legacy-peer-deps
+#12 0.753 npm warn EBADENGINE Unsupported engine {
+#12 0.753 npm warn EBADENGINE   package: 'react-router@7.7.1',
+#12 0.753 npm warn EBADENGINE   required: { node: '>=20.0.0' },
+#12 0.753 npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+#12 0.753 npm warn EBADENGINE }
+#12 0.754 npm warn EBADENGINE Unsupported engine {
+#12 0.754 npm warn EBADENGINE   package: 'react-router-dom@7.7.1',
+#12 0.754 npm warn EBADENGINE   required: { node: '>=20.0.0' },
+#12 0.754 npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+#12 0.754 npm warn EBADENGINE }
+#12 0.754 npm warn EBADENGINE Unsupported engine {
+#12 0.754 npm warn EBADENGINE   package: 'vite@7.0.6',
+#12 0.754 npm warn EBADENGINE   required: { node: '^20.19.0 || >=22.12.0' },
+#12 0.754 npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+#12 0.754 npm warn EBADENGINE }
+#12 8.528 
+#12 8.528 added 264 packages, and audited 265 packages in 8s
+#12 8.528 
+#12 8.528 61 packages are looking for funding
+#12 8.528   run `npm fund` for details
+#12 8.528 
+#12 8.528 found 0 vulnerabilities
+#12 8.530 npm notice
+#12 8.530 npm notice New major version of npm available! 10.8.2 -> 11.5.1
+#12 8.530 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.5.1
+#12 8.530 npm notice To update run: npm install -g npm@11.5.1
+#12 8.530 npm notice
+#12 DONE 8.7s
+
+#13 [builder 6/7] COPY . .
+#13 DONE 0.9s
+
+#14 [builder 7/7] RUN npm run build
+#14 0.347 
+#14 0.347 > note-app@0.0.0 build
+#14 0.347 > vite build
+#14 0.347 
+#14 0.560 vite v7.0.6 building for production...
+#14 0.810 transforming...
+#14 1.306 ✓ 36 modules transformed.
+#14 1.311 ✗ Build failed in 723ms
+#14 1.311 error during build:
+#14 1.311 [vite]: Rollup failed to resolve import "axios" from "/app/src/utils/axiosInstance.js".
+#14 1.311 This is most likely unintended because it can break your application at runtime.
+#14 1.311 If you do want to externalize this module explicitly add it to
+#14 1.311 `build.rollupOptions.external`
+#14 1.311     at viteLog (file:///app/node_modules/vite/dist/node/chunks/dep-BHkUv4Z8.js:34211:57)
+#14 1.311     at file:///app/node_modules/vite/dist/node/chunks/dep-BHkUv4Z8.js:34249:73
+#14 1.311     at onwarn (file:///app/node_modules/@vitejs/plugin-react/dist/index.js:90:7)
+#14 1.311     at file:///app/node_modules/vite/dist/node/chunks/dep-BHkUv4Z8.js:34249:28
+#14 1.311     at onRollupLog (file:///app/node_modules/vite/dist/node/chunks/dep-BHkUv4Z8.js:34244:3)
+#14 1.311     at onLog (file:///app/node_modules/vite/dist/node/chunks/dep-BHkUv4Z8.js:34032:4)
+#14 1.311     at file:///app/node_modules/rollup/dist/es/shared/node-entry.js:20818:32
+#14 1.311     at Object.logger [as onLog] (file:///app/node_modules/rollup/dist/es/shared/node-entry.js:22698:9)
+#14 1.311     at ModuleLoader.handleInvalidResolvedId (file:///app/node_modules/rollup/dist/es/shared/node-entry.js:21444:26)
+#14 1.311     at file:///app/node_modules/rollup/dist/es/shared/node-entry.js:21402:26
+#14 ERROR: process "/bin/sh -c npm run build" did not complete successfully: exit code: 1
+------
+ > [builder 7/7] RUN npm run build:
+1.311     at viteLog (file:///app/node_modules/vite/dist/node/chunks/dep-BHkUv4Z8.js:34211:57)
+1.311     at file:///app/node_modules/vite/dist/node/chunks/dep-BHkUv4Z8.js:34249:73
+1.311     at onwarn (file:///app/node_modules/@vitejs/plugin-react/dist/index.js:90:7)
+1.311     at file:///app/node_modules/vite/dist/node/chunks/dep-BHkUv4Z8.js:34249:28
+1.311     at onRollupLog (file:///app/node_modules/vite/dist/node/chunks/dep-BHkUv4Z8.js:34244:3)
+1.311     at onLog (file:///app/node_modules/vite/dist/node/chunks/dep-BHkUv4Z8.js:34032:4)
+1.311     at file:///app/node_modules/rollup/dist/es/shared/node-entry.js:20818:32
+1.311     at Object.logger [as onLog] (file:///app/node_modules/rollup/dist/es/shared/node-entry.js:22698:9)
+1.311     at ModuleLoader.handleInvalidResolvedId (file:///app/node_modules/rollup/dist/es/shared/node-entry.js:21444:26)
+1.311     at file:///app/node_modules/rollup/dist/es/shared/node-entry.js:21402:26
+------
+Dockerfile:24
+
+--------------------
+
+  22 |     
+
+  23 |     # 7. Run build
+
+  24 | >>> RUN npm run build
+
+  25 |     
+
+  26 |     # 8. Production stage
+
+--------------------
+
+failed to solve: process "/bin/sh -c npm run build" did not complete successfully: exit code: 1
+

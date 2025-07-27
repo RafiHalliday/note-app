@@ -1,8 +1,7 @@
-require("dotenv").config();
+// require("dotenv").config();
 
-import connectDB from './config/db.js';
+const connectDB = require('./config/db');
 
-const config = require("./config.json");
 const mongoose = require("mongoose");
 
 const User = require("./models/user.model");
