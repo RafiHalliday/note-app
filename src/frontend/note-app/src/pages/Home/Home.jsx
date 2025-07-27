@@ -116,8 +116,24 @@ const Home = () => {
   const handleClearSearch = () => {
     setIsSearch(false);
     getAllNotes();
-  }
+  };
 
+  const updateIsPinned = async (noteData) => {
+    const noteId = noteData._id
+    try {
+      const response = await axiosInstance.put("/update-note-pinned/" + noteId, {
+        "isPinned": !noteData.isPinned,
+      });
+
+      if (response.data && response.data.note) {
+        handleOpenToast("Note Edited Successfully");
+        getAllNotes();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
   useEffect(() => {
     // Validate token
     const token = localStorage.getItem("token");
@@ -132,7 +148,11 @@ const Home = () => {
 
   return (
     <>
-      <Navbar userInfo={userInfo} onSearchNote={onSearchNote} handleClearSearch={handleClearSearch} />
+      <Navbar
+        userInfo={userInfo}
+        onSearchNote={onSearchNote}
+        handleClearSearch={handleClearSearch}
+      />
 
       <div className="container mx-auto">
         {allNotes.length > 0 ? (
@@ -147,7 +167,7 @@ const Home = () => {
                 isPinned={item.isPinned}
                 onEdit={() => handleEdit(item)}
                 onDelete={() => deleteNote(item)}
-                onPinNote={() => {}}
+                onPinNote={() => updateIsPinned(item)}
               />
             ))}
           </div>
@@ -155,7 +175,9 @@ const Home = () => {
           <EmptyCard
             imgSrc={isSearch ? NoDataMark : EmptyNoteMark}
             message={
-              isSearch ? "No matching notes were found" :'Such an empty place. Want to fill it? Click the "Add" button to start!'
+              isSearch
+                ? "No matching notes were found"
+                : 'Such an empty place. Want to fill it? Click the "Add" button to start!'
             }
           />
         )}
