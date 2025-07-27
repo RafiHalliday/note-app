@@ -1,5 +1,7 @@
 require("dotenv").config();
 
+import connectDB from './config/db.js';
+
 const config = require("./config.json");
 const mongoose = require("mongoose");
 
@@ -13,7 +15,7 @@ const app = express();
 const jwt = require("jsonwebtoken");
 const { authenticateToken } = require("./utilities");
 
-mongoose.connect(config.connectionString);
+connectDB();
 
 // app.use(express.urlencoded({ extended: true })); // For form data
 // app.use(express.json()); // For JSON bodies
