@@ -19,6 +19,10 @@ const Home = () => {
 
   const navigate = useNavigate();
 
+  const handleEdit = (noteDetails) => {
+    setOpenAddEditModal({ isShown: true, type: "edit", data: noteDetails });
+  };
+
   // Get user info
   const getUserInfo = async () => {
     try {
@@ -39,7 +43,7 @@ const Home = () => {
     try {
       const response = await axiosInstance.get("/get-all-notes");
 
-      if ( response.data && response.data.notes) {
+      if (response.data && response.data.notes) {
         setAllNotes(response.data.notes);
       }
     } catch (error) {
@@ -66,17 +70,17 @@ const Home = () => {
       <div className="container mx-auto">
         <div className="grid grid-cols-3 gap-4 mt-8">
           {allNotes.map((item, index) => (
-          <NoteCard
-            key={item._id}
-            title={item.title}
-            date={item.createdOn}
-            content={item.content}
-            tags={item.tags}
-            isPinned={item.isPinned}
-            onEdit={() => {}}
-            onDelete={() => {}}
-            onPinNote={() => {}}
-          />
+            <NoteCard
+              key={item._id}
+              title={item.title}
+              date={item.createdOn}
+              content={item.content}
+              tags={item.tags}
+              isPinned={item.isPinned}
+              onEdit={() => handleEdit(item)}
+              onDelete={() => {}}
+              onPinNote={() => {}}
+            />
           ))}
         </div>
       </div>
