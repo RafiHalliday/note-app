@@ -9,6 +9,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import Toast from "../../components/ToastMessage/Toast";
 import EmptyCard from "../../components/Cards/EmptyCard";
 import EmptyNoteMark from "../../assets/images/EmptyNoteMark.svg";
+import NoDataMark from "../../assets/images/NoDataMark.svg";
 
 const Home = () => {
   const [openAddEditModal, setOpenAddEditModal] = useState({
@@ -25,6 +26,7 @@ const Home = () => {
 
   const [allNotes, setAllNotes] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
+  const [isSearch, setIsSearch] = useState(false);
 
   const navigate = useNavigate();
 
@@ -36,9 +38,9 @@ const Home = () => {
     setShowToastMsg({
       isShown: true,
       message: message,
-      type
+      type,
     });
-  }
+  };
 
   const handleCloseToast = () => {
     setShowToastMsg({
@@ -77,7 +79,7 @@ const Home = () => {
 
   // Delete note
   const deleteNote = async (data) => {
-    const noteId = data._id
+    const noteId = data._id;
     try {
       const response = await axiosInstance.delete("/delete-note/" + noteId);
 
@@ -94,6 +96,26 @@ const Home = () => {
         console.log("An unexpected error occured. Please try again.");
       }
     }
+  };
+
+  const onSearchNote = async (query) => {
+    try {
+      const response = await axiosInstance.get("/search-notes", {
+        params: { query },
+      });
+
+      if (response.data && response.data.notes) {
+        setIsSearch(true);
+        setAllNotes(response.data.notes);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleClearSearch = () => {
+    setIsSearch(false);
+    getAllNotes();
   }
 
   useEffect(() => {
@@ -110,24 +132,33 @@ const Home = () => {
 
   return (
     <>
-      <Navbar userInfo={userInfo} />
+      <Navbar userInfo={userInfo} onSearchNote={onSearchNote} handleClearSearch={handleClearSearch} />
 
       <div className="container mx-auto">
-        {allNotes.length > 0 ? <div className="grid grid-cols-3 gap-4 mt-8">
-          {allNotes.map((item, index) => (
-            <NoteCard
-              key={item._id}
-              title={item.title}
-              date={item.createdOn}
-              content={item.content}
-              tags={item.tags}
-              isPinned={item.isPinned}
-              onEdit={() => handleEdit(item)}
-              onDelete={() => deleteNote(item)}
-              onPinNote={() => {}}
-            />
-          ))}
-        </div> : <EmptyCard imgSrc={EmptyNoteMark} message={'Such an empty place. Want to fill it? Click the "Add" button to start!'}/>}
+        {allNotes.length > 0 ? (
+          <div className="grid grid-cols-3 gap-4 mt-8">
+            {allNotes.map((item, index) => (
+              <NoteCard
+                key={item._id}
+                title={item.title}
+                date={item.createdOn}
+                content={item.content}
+                tags={item.tags}
+                isPinned={item.isPinned}
+                onEdit={() => handleEdit(item)}
+                onDelete={() => deleteNote(item)}
+                onPinNote={() => {}}
+              />
+            ))}
+          </div>
+        ) : (
+          <EmptyCard
+            imgSrc={isSearch ? NoDataMark : EmptyNoteMark}
+            message={
+              isSearch ? "No matching notes were found" :'Such an empty place. Want to fill it? Click the "Add" button to start!'
+            }
+          />
+        )}
       </div>
 
       <button
